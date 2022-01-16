@@ -12,6 +12,7 @@ class Animal
         caloriesConsumption = sh;
     }
     public decimal MealConsumption(byte d)
+    //расчет необходимого количества пищи для указанного количества дней в месяце d
     {
         return Convert.ToDecimal(number * d * (caloriesConsumption) / (meal.calories));
     }
@@ -25,6 +26,7 @@ class AnimalEatTwoMeals : Animal
         meal2 = m2;
     }
     public decimal MealConsumption(byte d, byte i)
+    //расчет необходимого количества пищи для указанного количества дней в месяце d и указанного типа пищи i
     {
         if (i == 1)
         {
@@ -73,13 +75,13 @@ class Zoo
         //главное меню выбора подменю ввода типа животных либо расчета необходимого количества еды в месяц
         Console.WriteLine("Данная программа предназначена для расчета количества необходимой еды для животных в зоопарке.");
         Console.WriteLine("На данный момент в программе есть 3 типа животных: медведи, львы, обезьяны.");
-        //главное меню
         while (i != 0)
         {
             Console.WriteLine("\nДля ввода дней в нужном вам месяце введите - '1'.");
             Console.WriteLine("Для ввода количества животных введите - '2'");
             Console.WriteLine("Чтобы вывести результат введите '5'");
             Console.WriteLine("Для выхода из программы введите - '0'");
+            //контроль введенных символов
             s = Console.ReadLine();
             if (byte.TryParse(s, out i))
             {
@@ -155,7 +157,7 @@ class Zoo
                         }
 
                         break;
-                    //контроль введенных символов
+                    
                     default:
                         if (i != 0)
                             Console.WriteLine("\nТакого пункта меню нет, повторите ввод.\n");
@@ -167,8 +169,6 @@ class Zoo
                 Console.WriteLine("\nВведен неверный символ, попробуйте еще раз.");
                 i = 1;
             }
-            //i = Convert.ToByte(Console.ReadLine());
-
         }
         Console.WriteLine("\nВыход...");
     }
