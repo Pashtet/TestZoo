@@ -1,0 +1,15 @@
+D:\C#\Test zoo\bin\Debug\net6.0\Test zoo.exe
+D:\C#\Test zoo\bin\Debug\net6.0\Test zoo.deps.json
+D:\C#\Test zoo\bin\Debug\net6.0\Test zoo.runtimeconfig.json
+D:\C#\Test zoo\bin\Debug\net6.0\Test zoo.dll
+D:\C#\Test zoo\bin\Debug\net6.0\ref\Test zoo.dll
+D:\C#\Test zoo\bin\Debug\net6.0\Test zoo.pdb
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.csproj.AssemblyReference.cache
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.AssemblyInfoInputs.cache
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.AssemblyInfo.cs
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.csproj.CoreCompileInputs.cache
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.dll
+D:\C#\Test zoo\obj\Debug\net6.0\ref\Test zoo.dll
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.pdb
+D:\C#\Test zoo\obj\Debug\net6.0\Test zoo.genruntimeconfig.cache

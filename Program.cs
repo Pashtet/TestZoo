@@ -1,89 +1,95 @@
 ﻿using System;
 
-namespace testProject
+class Animal
 {
-    class Animal
-    {
-        public byte number;
-        protected ushort caloriesConsumption;
-        public Meal meal;
-        String typeAnimal = "";
+    internal byte number;
+    protected ushort caloriesConsumption;
+    internal Meal meal;
 
-        public Animal(Meal m, ushort sh)
-        {
-            meal = m;
-            caloriesConsumption = sh;
-        }
-        public virtual decimal MealConsumption(byte d)
-        {
-            return Convert.ToDecimal(number * d *(caloriesConsumption)  / (meal.calories));
-        }
+    public Animal(Meal m, ushort sh)
+    {
+        meal = m;
+        caloriesConsumption = sh;
     }
-    class AnimalEatTwoMeals : Animal
+    public decimal MealConsumption(byte d)
     {
-        public Meal meal2;
-        public AnimalEatTwoMeals(Meal m1, Meal m2, ushort sh)
-        : base(m1, sh)
-        {
-            meal2 = m2;
-        }
-        public decimal MealConsumption(byte d, byte i)
-        {
-            if(i==1){
-                return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal.calories));
-            }else if(i==2){
-                return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal2.calories));
-            } else return -1;
-            
-        }
+        return Convert.ToDecimal(number * d * (caloriesConsumption) / (meal.calories));
     }
-    class Meal
+}
+class AnimalEatTwoMeals : Animal
+{
+    internal Meal meal2;
+    public AnimalEatTwoMeals(Meal m1, Meal m2, ushort sh)
+    : base(m1, sh)
     {
-        public String typeMeal = "";
-        public int calories;
-        public Meal(string s, int c)
-        {
-            typeMeal = s;
-            calories = c;
-        }
+        meal2 = m2;
     }
-    class Zoo
+    public decimal MealConsumption(byte d, byte i)
     {
-        static void Main(string[] args)
+        if (i == 1)
         {
-            Console.WriteLine("Hello, it's zoo!");
-            //количество дней в месяце
-            byte days = 0;
+            return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal.calories));
+        }
+        else if (i == 2)
+        {
+            return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal2.calories));
+        }
+        else return -1;
 
-            //создаем типы пищи с указанием калорийности
-            Meal banana = new Meal("Банан", 890);
-            Meal meat = new Meal("Мясо", 1430);
+    }
+}
+class Meal
+{
+    internal string typeMeal;
+    internal int calories;
+    public Meal(string s, int c)
+    {
+        typeMeal = s;
+        calories = c;
+    }
+}
 
-            // создаем животных с указанием типов еды
-            Animal lion = new Animal(meat, 10000);
-            Animal monkey = new Animal(banana, 1000);
-            AnimalEatTwoMeals bear = new AnimalEatTwoMeals(meat, banana, 15000);
 
-            //Интерфейс типа выбор из предложенных вариантов
-            byte i = 1, j = 1;
-            //главное меню выбора подменю ввода типа животных либо расчета необходимого количества еды в месяц
-            Console.WriteLine("Данная программа предназначена для расчета количества необходимой еды для животных в зоопарке.");
-            Console.WriteLine("На данный момент в программе есть 3 типа животных: медведи, львы, обезьяны.");
-            //главное меню
-            while (i != 0)
+class Zoo
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("Hello, it's zoo!");
+        //количество дней в месяце
+        byte days = 0;
+
+        //создаем типы пищи с указанием калорийности
+        Meal banana = new Meal("Банан", 890);
+        Meal meat = new Meal("Мясо", 1430);
+
+        // создаем животных с указанием типов еды
+        Animal lion = new Animal(meat, 10000);
+        Animal monkey = new Animal(banana, 1000);
+        AnimalEatTwoMeals bear = new AnimalEatTwoMeals(meat, banana, 15000);
+
+        //Интерфейс типа выбор из предложенных вариантов
+        byte i = 1, j = 1;
+        string? s;
+        //главное меню выбора подменю ввода типа животных либо расчета необходимого количества еды в месяц
+        Console.WriteLine("Данная программа предназначена для расчета количества необходимой еды для животных в зоопарке.");
+        Console.WriteLine("На данный момент в программе есть 3 типа животных: медведи, львы, обезьяны.");
+        //главное меню
+        while (i != 0)
+        {
+            Console.WriteLine("\nДля ввода дней в нужном вам месяце введите - '1'.");
+            Console.WriteLine("Для ввода количества животных введите - '2'");
+            Console.WriteLine("Чтобы вывести результат введите '5'");
+            Console.WriteLine("Для выхода из программы введите - '0'");
+            s = Console.ReadLine();
+            if (byte.TryParse(s, out i))
             {
-                Console.WriteLine("\nДля ввода дней в нужном вам месяце введите - '1'.");
-                Console.WriteLine("Для расчета необходимого количества еды в каком-либо месяце введите - '2'");
-                Console.WriteLine("Чтобы вывести результат введите '5'");
-                Console.WriteLine("Для выхода из программы введите - '0'");
-                i = Convert.ToByte(Console.ReadLine());
                 switch (i)
                 {
                     //подменю ввода количества дней в месяце
                     case 1:
                         Console.WriteLine("\nВведите количество дней в выбранном месяце для расчета:");
                         days = Convert.ToByte(Console.ReadLine());
-                        Console.WriteLine("\nВведенное количество дней:" + days);
+                        Console.WriteLine("\nВведенное количество дней: " + days);
                         break;
 
                     //подменю ввода количества животных
@@ -132,7 +138,7 @@ namespace testProject
                                 Console.WriteLine("не введено количество львов");
                             if (bear.number != 0)
                             {
-                                Console.WriteLine("для медведей необходимо '{0}' штук еды типа '{1}' и '{2}' штук еды типа '{3}' при делении видов еды по калорийности поровну за месяц", bear.MealConsumption(days,1), bear.meal.typeMeal, bear.MealConsumption(days,2), bear.meal2.typeMeal);
+                                Console.WriteLine("для медведей необходимо '{0}' штук еды типа '{1}' и '{2}' штук еды типа '{3}' при делении видов еды по калорийности поровну за месяц", bear.MealConsumption(days, 1), bear.meal.typeMeal, bear.MealConsumption(days, 2), bear.meal2.typeMeal);
                             }
                             else
                                 Console.WriteLine("не введено количество медведей");
@@ -151,10 +157,19 @@ namespace testProject
                         break;
                     //контроль введенных символов
                     default:
-                        Console.WriteLine("\nВведен неверный символ, повторите ввод.\n");
+                        if (i != 0)
+                            Console.WriteLine("\nТакого пункта меню нет, повторите ввод.\n");
                         break;
                 }
             }
+            else
+            {
+                Console.WriteLine("\nВведен неверный символ, попробуйте еще раз.");
+                i = 1;
+            }
+            //i = Convert.ToByte(Console.ReadLine());
+
         }
+        Console.WriteLine("\nВыход...");
     }
 }
