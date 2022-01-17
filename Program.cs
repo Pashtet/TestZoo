@@ -4,40 +4,27 @@ class Animal
 {
     internal byte number;
     protected ushort caloriesConsumption;
-    internal Meal meal;
+    //internal Meal meal;
 
-    public Animal(Meal m, ushort sh)
+    internal Meal[] mealM;
+    public Animal(Meal[] m, ushort n,  ushort sh)
     {
-        meal = m;
+        mealM = new Meal[n];
+        foreach (Meal i in mealM){
+            mealM = m;
+        }
         caloriesConsumption = sh;
     }
     public decimal MealConsumption(byte d)
     //расчет необходимого количества пищи для указанного количества дней в месяце d
     {
-        return Convert.ToDecimal(number * d * (caloriesConsumption) / (meal.calories));
+        return Convert.ToDecimal(number * d * (caloriesConsumption) / (mealM[0].calories));
     }
-}
-class AnimalEatTwoMeals : Animal
-{
-    internal Meal meal2;
-    public AnimalEatTwoMeals(Meal m1, Meal m2, ushort sh)
-    : base(m1, sh)
-    {
-        meal2 = m2;
-    }
-    public decimal MealConsumption(byte d, byte i)
-    //расчет необходимого количества пищи для указанного количества дней в месяце d и указанного типа пищи i
-    {
-        if (i == 1)
-        {
-            return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal.calories));
-        }
-        else if (i == 2)
-        {
-            return Convert.ToDecimal(number * d * ((caloriesConsumption) / 2) / (meal2.calories));
-        }
-        else return -1;
 
+    public decimal MealConsumption(byte d, ushort n)
+    //расчет необходимого количества пищи для указанного количества дней в месяце d и в зависимости от количества типов пищи
+    {
+        return Convert.ToDecimal(number * d * (caloriesConsumption / mealM.Length) / (mealM[n-1].calories));
     }
 }
 class Meal
@@ -64,10 +51,10 @@ class Zoo
         Meal banana = new Meal("Банан", 890);
         Meal meat = new Meal("Мясо", 1430);
 
-        // создаем животных с указанием типов еды
-        Animal lion = new Animal(meat, 10000);
-        Animal monkey = new Animal(banana, 1000);
-        AnimalEatTwoMeals bear = new AnimalEatTwoMeals(meat, banana, 15000);
+        // создаем животных с указанием типов еды, количества типов и потребляемых калорий в день
+        Animal lion = new Animal(new Meal[] {meat}, 1, 10000);
+        Animal monkey = new Animal(new Meal[] {banana}, 1, 1000);
+        Animal bear = new Animal(new Meal[] {meat, banana}, 2, 15000);
 
         //Интерфейс типа выбор из предложенных вариантов
         byte i = 1, j = 1;
@@ -134,19 +121,19 @@ class Zoo
                             Console.WriteLine("\nРезультат для месяца с количеством дней - '{0}':\n ", days);
                             if (lion.number != 0)
                             {
-                                Console.WriteLine("для львов необходимо '{0}' штук еды типа '{1}'", lion.MealConsumption(days), lion.meal.typeMeal);
+                                Console.WriteLine("для львов необходимо '{0}' штук еды типа '{1}'", lion.MealConsumption(days), lion.mealM[0].typeMeal);
                             }
                             else
                                 Console.WriteLine("не введено количество львов");
                             if (bear.number != 0)
                             {
-                                Console.WriteLine("для медведей необходимо '{0}' штук еды типа '{1}' и '{2}' штук еды типа '{3}' при делении видов еды по калорийности поровну за месяц", bear.MealConsumption(days, 1), bear.meal.typeMeal, bear.MealConsumption(days, 2), bear.meal2.typeMeal);
+                                Console.WriteLine("для медведей необходимо '{0}' штук еды типа '{1}' и '{2}' штук еды типа '{3}' при делении видов еды по калорийности поровну за месяц", bear.MealConsumption(days, 1), bear.mealM[0].typeMeal, bear.MealConsumption(days, 2), bear.mealM[1].typeMeal);
                             }
                             else
                                 Console.WriteLine("не введено количество медведей");
                             if (monkey.number != 0)
                             {
-                                Console.WriteLine("для обезьян необходимо '{0}' штук еды типа '{1}'", monkey.MealConsumption(days), monkey.meal.typeMeal);
+                                Console.WriteLine("для обезьян необходимо '{0}' штук еды типа '{1}'", monkey.MealConsumption(days), monkey.mealM[0].typeMeal);
                             }
                             else
                                 Console.WriteLine("не введено количество обезьян");
