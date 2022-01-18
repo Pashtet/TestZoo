@@ -11,26 +11,18 @@ class Animal
     public Animal(ushort cc, params Meal[] mealParams)
     //входные параметры: cc - потребление еды в день данного животного, mParams - передача типов пищи как параметры
     {
-
-        mealM = new Meal[mealParams.Length];
+        mealM = new Meal[mealParams.Length]; 
         foreach (Meal i in mealM)
         {
-            mealM = mealParams;
+            mealM = mealParams; 
         }
         caloriesConsumption = cc;
     }
 
-    public decimal MealConsumption(byte d)
+    public decimal MealConsumption(byte d) => Convert.ToDecimal(number * d * (caloriesConsumption) / (mealM[0].calories));
     //расчет необходимого количества пищи для указанного количества дней в месяце d
-    {
-        return Convert.ToDecimal(number * d * (caloriesConsumption) / (mealM[0].calories));
-    }
-
-    public decimal MealConsumption(byte d, ushort n)
+    public decimal MealConsumption(byte d, ushort n) => Convert.ToDecimal(number * d * (caloriesConsumption / mealM.Length) / (mealM[n - 1].calories));
     //расчет необходимого количества пищи для указанного количества дней в месяце d и в зависимости от количества типов пищи
-    {
-        return Convert.ToDecimal(number * d * (caloriesConsumption / mealM.Length) / (mealM[n - 1].calories));
-    }
 }
 class Meal
 {
@@ -94,7 +86,6 @@ class Zoo
                             {
                                 Console.WriteLine("\nДля ввода количества львов введите - '1', обезьян  - '2', медведей - '3'.");
                                 Console.WriteLine("Для выхода из меню введите - '0'");
-
                                 j = Convert.ToByte(Console.ReadLine());
                                 switch (j)
                                 {
