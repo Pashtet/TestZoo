@@ -3,18 +3,23 @@
 class Animal
 {
     internal byte number;
-    protected ushort caloriesConsumption;
-    //internal Meal meal;
+
+    ushort caloriesConsumption;
 
     internal Meal[] mealM;
-    public Animal(Meal[] m, ushort n,  ushort sh)
+
+    public Animal(ushort cc, params Meal[] mealParams)
+    //входные параметры: cc - потребление еды в день данного животного, mParams - передача типов пищи как параметры
     {
-        mealM = new Meal[n];
-        foreach (Meal i in mealM){
-            mealM = m;
+
+        mealM = new Meal[mealParams.Length];
+        foreach (Meal i in mealM)
+        {
+            mealM = mealParams;
         }
-        caloriesConsumption = sh;
+        caloriesConsumption = cc;
     }
+
     public decimal MealConsumption(byte d)
     //расчет необходимого количества пищи для указанного количества дней в месяце d
     {
@@ -24,7 +29,7 @@ class Animal
     public decimal MealConsumption(byte d, ushort n)
     //расчет необходимого количества пищи для указанного количества дней в месяце d и в зависимости от количества типов пищи
     {
-        return Convert.ToDecimal(number * d * (caloriesConsumption / mealM.Length) / (mealM[n-1].calories));
+        return Convert.ToDecimal(number * d * (caloriesConsumption / mealM.Length) / (mealM[n - 1].calories));
     }
 }
 class Meal
@@ -51,10 +56,11 @@ class Zoo
         Meal banana = new Meal("Банан", 890);
         Meal meat = new Meal("Мясо", 1430);
 
-        // создаем животных с указанием типов еды, количества типов и потребляемых калорий в день
-        Animal lion = new Animal(new Meal[] {meat}, 1, 10000);
-        Animal monkey = new Animal(new Meal[] {banana}, 1, 1000);
-        Animal bear = new Animal(new Meal[] {meat, banana}, 2, 15000);
+        //изначально мы знаем про животных, сколько потребление калорий в день и типы пищи 
+        //создаем животных с указанием потребляемых калорий, и типов пищи с помощью передачи параметров
+        Animal lion = new Animal(10000, meat);
+        Animal monkey = new Animal(1000, banana);
+        Animal bear = new Animal(15000, meat, banana);
 
         //Интерфейс типа выбор из предложенных вариантов
         byte i = 1, j = 1;
@@ -86,7 +92,7 @@ class Zoo
                         {
                             while (j != 0)
                             {
-                                Console.WriteLine("\nДля ввода количества львов введите - '1', медведей - '2', обезьян - '3'.");
+                                Console.WriteLine("\nДля ввода количества львов введите - '1', обезьян  - '2', медведей - '3'.");
                                 Console.WriteLine("Для выхода из меню введите - '0'");
 
                                 j = Convert.ToByte(Console.ReadLine());
@@ -98,16 +104,17 @@ class Zoo
                                         break;
 
                                     case 2:
+                                        Console.WriteLine("\nВведите количество обезьян:");
+                                        monkey.number = Convert.ToByte(Console.ReadLine());
+                                        break;
+
+                                    case 3:
                                         Console.WriteLine("\nВведите количество медведей:");
                                         bear.number = Convert.ToByte(Console.ReadLine());
                                         break;
 
-                                    case 3:
-                                        Console.WriteLine("\nВведите количество обезьян:");
-                                        monkey.number = Convert.ToByte(Console.ReadLine());
-                                        break;
                                     default:
-                                        Console.WriteLine("\nВведенноe количество по типам животных:\n львы - {0},\n медведи - {1},\n обезьяны - {2}", lion.number, bear.number, monkey.number);
+                                        Console.WriteLine("\nВведенноe количество по типам животных:\n львы - {0},\n обезьяны - {1},\n медведи - {2}", lion.number, monkey.number, bear.number);
                                         break;
                                 }
                             }
@@ -144,7 +151,7 @@ class Zoo
                         }
 
                         break;
-                    
+
                     default:
                         if (i != 0)
                             Console.WriteLine("\nТакого пункта меню нет, повторите ввод.\n");
